@@ -6,12 +6,11 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Snake");
 
 	GameManager* gameManager =new GameManager();
 	gameManager->GetInstance();
-	gameManager->InitGameManager(&window);
-	gameManager->GameLoop(&window);
+	gameManager->InitGameManager();
+	gameManager->GameLoop();
 
 	return 0;
 }

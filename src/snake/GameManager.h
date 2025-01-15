@@ -14,12 +14,11 @@ public :
 	Food* food;
 
 	sf::View v;
-	sf::RenderWindow window=sf::RenderWindow(sf::VideoMode(800, 600), "Snake");
+	sf::RenderWindow* window;
 
 	static GameManager* m_Instance;
 	static GameManager* GetInstance();
-	void InitGameManager(sf::RenderWindow* window);
-	void GameLoop(sf::RenderWindow* window);
-	void Input(sf::Event event);
+	void InitGameManager();
+	void GameLoop();
 };
 

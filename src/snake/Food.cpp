@@ -16,3 +16,9 @@ Food::Food(std::vector<sf::Vector2f> snakeBody , std::mt19937 gen , bool found)
 
 
 }
+
+void Food::draw(sf::RenderWindow& window, sf::RectangleShape& shape) const {
+	shape.setPosition(foodPosition * shape.getSize().x);
+	shape.setFillColor(sf::Color::Red);
+	window.draw(shape);
+}

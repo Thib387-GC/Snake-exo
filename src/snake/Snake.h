@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 #include "GameManager.h"
-class Snake :public sf::Drawable
+class Snake 
 {public:
 	sf::RectangleShape* shape;
 	float time_between_move;
@@ -10,7 +10,9 @@ class Snake :public sf::Drawable
 	std::vector<sf::Vector2f> snakeBody;
 	sf::Vector2f* snakeDirection;
 	Snake();
-	void Update(std::mt19937 gen, float deltaTime);
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	bool Update(std::mt19937 gen, float deltaTime, Food* food);
+	void draw(sf::RenderWindow& window, Food* food) const;
+
+	void Input(sf::Event event);
 
 };

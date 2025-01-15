@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "Snake.h"
+#include <SFML/Graphics.hpp>
 GameManager* GameManager::m_Instance = nullptr;
 
 GameManager* GameManager::GetInstance()
@@ -11,20 +12,22 @@ GameManager* GameManager::GetInstance()
     return m_Instance;
 }
 
-void GameManager::InitGameManager(sf::RenderWindow* window)
+void GameManager::InitGameManager()
 {
+
+
+
 	std::mt19937 gen;
 	 c = new sf::Clock();
 
 	gen.seed(time(nullptr));
 	found = false;
 
-
 	snake = new Snake();
-
+	
 
 	food = new Food(snake->snakeBody, gen, found);
-
+	window =   new sf::RenderWindow(sf::VideoMode(800, 600), "Snake");
 	
 	v = window->getDefaultView();
 	v.setCenter(0, 0);
@@ -39,7 +42,7 @@ void GameManager::InitGameManager(sf::RenderWindow* window)
 
 }
 
-void GameManager::GameLoop(sf::RenderWindow* window)
+void GameManager::GameLoop()
 {
 	std::mt19937 gen;
 
@@ -54,7 +57,7 @@ void GameManager::GameLoop(sf::RenderWindow* window)
 			if (event.type == sf::Event::Closed)
 				window->close();
 			if (event.type == sf::Event::KeyPressed) {
-				Input(event);
+				snake->Input(event);
 			}
 		}
 
@@ -64,26 +67,12 @@ void GameManager::GameLoop(sf::RenderWindow* window)
 		}
 		else {
 			
-			snake->Update(gen, deltaTime);
-			window->draw(*snake);
+			gameover = snake->Update(gen, deltaTime, food);
+			snake->draw(*window, food);
+
 		}
 
 		window->display();
 	}
 }
 
-void GameManager::Input(sf::Event event)
-{
-	if (event.key.scancode == sf::Keyboard::Scancode::Left) {
-		*snake->snakeDirection = sf::Vector2f(-1, 0);
-	}
-	if (event.key.scancode == sf::Keyboard::Scancode::Right) {
-		*snake->snakeDirection = sf::Vector2f(1, 0);
-	}
-	if (event.key.scancode == sf::Keyboard::Scancode::Up) {
-		*snake->snakeDirection = sf::Vector2f(0, -1);
-	}
-	if (event.key.scancode == sf::Keyboard::Scancode::Down) {
-		*snake->snakeDirection = sf::Vector2f(0, 1);
-	}
-}
